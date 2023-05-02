@@ -19,10 +19,10 @@ class VonMisesGrid():
         big_lambda += big_lambda.T.copy()
         return big_lambda
     
-    def _gibbs_sample(self, node):
+    def _one_gibbs_sample(self, node):
         a = self.kappa[node] * torch.cos(self.theta[node] - self.mu[node])
         b = torch.reduce_sum(self.big_lambda[node, :] * torch.sin(self.theta - self.mu) * torch.sin(self.theta[node] - self.mu[node]))
         return torch.exp(a + b)
+    
+    def _gibbs_sample(self):
         
-    def _all_but(self, array, idx):
-        return array[array]
