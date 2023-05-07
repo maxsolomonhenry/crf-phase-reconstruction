@@ -6,7 +6,7 @@ def apply_stft(tensor, frame_length=256, frame_step=64):
     return tf.signal.stft(tensor, frame_length=frame_length, frame_step=frame_step)
 
 def apply_istft(tensor, frame_length=256, frame_step=64):
-    return tf.signal.inverse_stft(tensor, frame_length=frame_length, frame_step=frame_step)
+    return tf.signal.inverse_stft(tensor, frame_length=frame_length, frame_step=frame_step) / 1.5
 
 def complex_from_polar(magnitude, phase):
     return tf.complex(magnitude, 0.0) * tf.exp(tf.complex(0.0, phase))
@@ -70,3 +70,9 @@ def reconstruction_snr(y, y_hat):
     noise = tf.reduce_sum((y - y_hat) ** 2, axis=1)
     
     return 10 * np.log10(signal / noise)
+
+def plot_signal(x, sr):
+    time = np.arange(len(x)) / sr
+    plt.plot(time, x, linewidth=0.25)
+    plt.xlabel("Time (seconds)")
+    plt.ylabel("Amplitude")
